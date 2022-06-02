@@ -24,12 +24,15 @@ return {
     //     this.res=res;
     //   }
     // )
-    // esay-mock的方式---需要自己部署  这里使用fastmock 需要手动在main.js设置baseURL
+
+    // esay-mock的方式---需要自己部署 
+    //  这里使用fastmock 需要手动在main.js设置baseURL
     axios.get('/user/login').then(
       (res)=>{
         this.res=res;
       }
     )
+    
     // 本地集成API的方式需要在src下面创建mock
     // axios.get('/user/login').then(
     //   (res)=>{

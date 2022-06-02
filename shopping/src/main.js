@@ -12,7 +12,7 @@ if(mock){
   require('./mock/api');
 }
 
-// //JSONP/cors方式 根据不同环境选择不同的基地址
+// JSONP/cors方式 根据不同环境选择不同的基地址
 // axios.defaults.baseURL = env.baseURL;
 
 // fastmock手动设置的基地址
