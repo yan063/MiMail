@@ -6,14 +6,15 @@
 
 <script>
 // import storage from './storage'
-import axios from 'axios'
+// import axios from 'axios'
+
 export default {
   name: 'App',
   components: {
   },
   data(){
 return {
-  res:{}
+  // res:{}
 }
   },
   mounted(){
@@ -27,11 +28,11 @@ return {
 
     // esay-mock的方式---需要自己部署 
     //  这里使用fastmock 需要手动在main.js设置baseURL
-    axios.get('/user/login').then(
-      (res)=>{
-        this.res=res;
-      }
-    )
+    // axios.get('/user/login').then(
+    //   (res)=>{
+    //     this.res=res;
+    //   }
+    // )
     
     // 本地集成API的方式需要在src下面创建mock
     // axios.get('/user/login').then(
@@ -44,6 +45,7 @@ return {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "./assets/scss/reset.scss";
 
 </style>
