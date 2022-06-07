@@ -169,19 +169,19 @@ export default {
 .header {
   .nav-topbar {
     height: 39px;
-    background-color: #333333;
+    background-color: $colorB;
     line-height: 39px;
     .container {
-      font-size: 12px;
+      font-size: $fontK;
       @include flex();
       a {
-        color: #ffffff;
+        color:$colorG;
         display: inline-block;
         margin-right: 17px;
       }
       .topbar-user {
         a {
-          color: #ffffff;
+          color: $colorG;
           display: inline-block;
           margin-right: 17px;
         }
@@ -189,7 +189,7 @@ export default {
           width: 110px;
           background-color: $colorA;
           text-align: center;
-          color: #ffffff;
+          color: $colorG;
           .icon-cart {
             @include bgImg(16px, 12px, "/imgs/icon-cart-checked.png");
             margin-right: 4px;
@@ -200,14 +200,14 @@ export default {
   }
   .nav-header {
     .container {
-      height: 112px;
-      @include flex();
       position: relative;
+      height: 112px;
+      @include flex();      
       .header-logo {
         width: 55px;
         height: 55px;
         display: inline-block;
-        background-color: #ff6600;
+        background-color:$colorA;
         a {
           display: inline-block;
           width: 110px;
@@ -235,8 +235,8 @@ export default {
         padding-left: 209px;
         .item-menu {
           display: inline-block;
-          color: #333333;
-          font-size: 16px;
+          color: $colorB;
+          font-size: $fontI;
           font-weight: bold;
           line-height: 112px;
           margin-right: 20px;
@@ -256,13 +256,14 @@ export default {
             top: 112px;
             left: 0;
             width: 1226px;
-            border-top: 1px solid #e5e5e5;
+            border-top: 1px solid $colorH;
             z-index: 10;
             height: 0;
             opacity: 0;
             overflow: hidden;
             box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
             transition: all 0.5s;
+            background-color:$colorG ;
             .product {
               position: relative;
               float: left;
