@@ -41,6 +41,27 @@ return {
     //   }
     // )
     
+    this.getUser();
+    this.getCartCount();
+    
+  },
+  methods:{
+    //拉取所有用户信息
+    getUser(){
+      this.axios.get('/user').then((res)=>{
+        // todo保存到Vuex中
+       this.$store.dispatch('saveUserName',res.username);
+        // 
+      })
+    },
+    getCartCount(){
+      this.axios.get('/carts/products/sum').then((res)=>{
+        // todo保存到Vuex中      
+         this.$store.dispatch('saveCartCount',res);
+        // 
+      })
+    }
+
   }
 }
 </script>

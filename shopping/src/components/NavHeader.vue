@@ -13,7 +13,9 @@
           <a href="javascript:;" v-if="!username" @click="login">登录</a>
           <a href="javascript:;" v-if="username">我的订单</a>
           <a href="javascript:;" class="my-cart"
-            ><span class="icon-cart" @click="goToCart"></span>购物车</a
+            ><span class="icon-cart" @click="goToCart"></span>购物车({{
+              cartCount
+            }})</a
           >
         </div>
       </div>
@@ -35,7 +37,7 @@
                 >
                   <a v-bind:href="'/#/product/' + item.id" target="_black">
                     <div class="pro-img">
-                      <img :src="item.mainImage" :alt="item.subtitle" />
+                      <img v-lazy="item.mainImage" :alt="item.subtitle" />
                     </div>
                     <div class="pro-name">{{ item.name }}</div>
                     <div class="pro-price">{{ item.price | currency }}</div>
@@ -54,7 +56,7 @@
                 <li class="product">
                   <a href="" target="_black">
                     <div class="pro-img">
-                      <img src="/imgs/nav-img/nav-3-1.jpg" alt="" />
+                      <img v-lazy="'/imgs/nav-img/nav-3-1.jpg'" alt="" />
                     </div>
                     <div class="pro-name">小米壁画电视 65英寸</div>
                     <div class="pro-price">2999元</div>
@@ -64,7 +66,7 @@
                 <li class="product">
                   <a href="" target="_black">
                     <div class="pro-img">
-                      <img src="/imgs/nav-img/nav-3-2.jpg" alt="" />
+                      <img v-lazy="'/imgs/nav-img/nav-3-2.jpg'" alt="" />
                     </div>
                     <div class="pro-name">小米全面屏</div>
                     <div class="pro-price">2999元</div>
@@ -73,7 +75,7 @@
                 <li class="product">
                   <a href="" target="_black">
                     <div class="pro-img">
-                      <img src="/imgs/nav-img/nav-3-3.png" alt="" />
+                      <img v-lazy="'/imgs/nav-img/nav-3-3.png'" alt="" />
                     </div>
                     <div class="pro-name">小米电视</div>
                     <div class="pro-price">2999元</div>
@@ -82,7 +84,7 @@
                 <li class="product">
                   <a href="" target="_black">
                     <div class="pro-img">
-                      <img src="/imgs/nav-img/nav-3-4.jpg" alt="" />
+                      <img v-lazy="'/imgs/nav-img/nav-3-4.jpg'" alt="" />
                     </div>
                     <div class="pro-name">小米电视</div>
                     <div class="pro-price">2999元</div>
@@ -91,7 +93,7 @@
                 <li class="product">
                   <a href="" target="_black">
                     <div class="pro-img">
-                      <img src="/imgs/nav-img/nav-3-5.jpg" alt="" />
+                      <img v-lazy="'/imgs/nav-img/nav-3-5.jpg'" alt="" />
                     </div>
                     <div class="pro-name">小米电视</div>
                     <div class="pro-price">6999元</div>
@@ -100,7 +102,7 @@
                 <li class="product">
                   <a href="" target="_black">
                     <div class="pro-img">
-                      <img src="/imgs/nav-img/nav-3-6.png" alt="" />
+                      <img v-lazy="'/imgs/nav-img/nav-3-6.png'" alt="" />
                     </div>
                     <div class="pro-name">查看全部</div>
                     <div class="pro-price">查看全部</div>
@@ -122,14 +124,22 @@
 </template>
 <script>
 // import axios from 'axios'
-
+import {mapState} from'vuex';
 export default {
   name: "nav-header",
   data() {
     return {
       phoneList: [],
-      username: "",
     };
+  },
+  computed: {
+    // username() {
+    //   return this.$store.state.username;
+    // },
+    // cartCount() {
+    //   return this.$store.state.cartCount;
+    // },
+    ...mapState(['username','cartCount'])
   },
   filters: {
     currency(val) {
@@ -175,7 +185,7 @@ export default {
       font-size: $fontK;
       @include flex();
       a {
-        color:$colorG;
+        color: $colorG;
         display: inline-block;
         margin-right: 17px;
       }
@@ -202,12 +212,12 @@ export default {
     .container {
       position: relative;
       height: 112px;
-      @include flex();      
+      @include flex();
       .header-logo {
         width: 55px;
         height: 55px;
         display: inline-block;
-        background-color:$colorA;
+        background-color: $colorA;
         a {
           display: inline-block;
           width: 110px;
@@ -229,84 +239,84 @@ export default {
           }
         }
       }
-      .header-menu{
-          display:inline-block;
-          width:643px;
-          padding-left:209px;
-          .item-menu{
-            display:inline-block;
-            color:#333333;
-            font-weight:bold;
-            font-size:16px;
-            line-height:112px;
-            margin-right:20px;
-            span{
-              cursor:pointer;
+      .header-menu {
+        display: inline-block;
+        width: 643px;
+        padding-left: 209px;
+        .item-menu {
+          display: inline-block;
+          color: #333333;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 112px;
+          margin-right: 20px;
+          span {
+            cursor: pointer;
+          }
+          &:hover {
+            color: $colorA;
+            .children {
+              height: 220px;
+              opacity: 1;
+              border-top: 1px solid #e5e5e5;
             }
-            &:hover{
-              color:$colorA;
-              .children{
-                height:220px;
-                opacity:1;
-                border-top:1px solid #E5E5E5;
+          }
+          .children {
+            position: absolute;
+            top: 112px;
+            left: 0;
+            width: 1226px;
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
+            z-index: 10;
+            transition: all 0.5s;
+            background-color: #ffffff;
+            .product {
+              position: relative;
+              float: left;
+              width: 16.6%;
+              height: 220px;
+              font-size: 12px;
+              line-height: 12px;
+              text-align: center;
+              a {
+                display: inline-block;
               }
-            }
-            .children{
-              position:absolute;
-              top:112px;
-              left:0;
-              width:1226px;
-              height:0;
-              opacity:0;
-              overflow:hidden;
-              box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
-              z-index: 10;
-              transition:all .5s;
-              background-color: #ffffff;
-              .product{
-                position:relative;
-                float:left;
-                width:16.6%;
-                height:220px;
-                font-size:12px;
-                line-height:12px;
-                text-align: center;
-                a{
-                  display:inline-block;
-                }
-                img{
-                  width:auto;
-                  height:111px;
-                  margin-top:26px;
-                }
-                .pro-img{
-                  height:137px;
-                }
-                .pro-name{
-                  font-weight:bold;
-                  margin-top:19px;
-                  margin-bottom:8px;
-                  color:$colorB;
-                }
-                .pro-price{
-                  color:$colorA;
-                }
-                &:before{
-                  content:' ';
-                  position:absolute;
-                  top:28px;
-                  right:0;
-                  border-left:1px solid $colorF;
-                  height:100px;
-                  width:1px;
-                }
-                &:last-child:before{
-                  display:none;
-                }
+              img {
+                width: auto;
+                height: 111px;
+                margin-top: 26px;
+              }
+              .pro-img {
+                height: 137px;
+              }
+              .pro-name {
+                font-weight: bold;
+                margin-top: 19px;
+                margin-bottom: 8px;
+                color: $colorB;
+              }
+              .pro-price {
+                color: $colorA;
+              }
+              &:before {
+                content: " ";
+                position: absolute;
+                top: 28px;
+                right: 0;
+                border-left: 1px solid $colorF;
+                height: 100px;
+                width: 1px;
+              }
+              &:last-child:before {
+                display: none;
               }
             }
           }
         }
+      }
       .header-search {
         width: 319px;
         .wrapper {
