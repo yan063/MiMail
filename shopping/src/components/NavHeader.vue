@@ -11,9 +11,10 @@
         <div class="topbar-user">
           <a href="javascript:;" v-if="username">{{ username }}</a>
           <a href="javascript:;" v-if="!username" @click="login">登录</a>
+          <a href="javascript:;" v-if="username" @click="logout">退出</a>
           <a href="javascript:;" v-if="username">我的订单</a>
-          <a href="javascript:;" class="my-cart"
-            ><span class="icon-cart" @click="goToCart"></span>购物车({{
+          <a href="javascript:;" class="my-cart" @click="goToCart"
+            ><span class="icon-cart" ></span>购物车({{
               cartCount
             }})</a
           >
@@ -124,7 +125,7 @@
 </template>
 <script>
 // import axios from 'axios'
-import {mapState} from'vuex';
+import { mapState } from "vuex";
 export default {
   name: "nav-header",
   data() {
@@ -139,7 +140,7 @@ export default {
     // cartCount() {
     //   return this.$store.state.cartCount;
     // },
-    ...mapState(['username','cartCount'])
+    ...mapState(["username", "cartCount"]),
   },
   filters: {
     currency(val) {
@@ -149,10 +150,29 @@ export default {
   },
   mounted() {
     this.getProductList();
+    let params = this.$route.params;
+    if (params && params.from) {
+      this.getCartCount();
+    }
   },
   methods: {
     login() {
       this.$router.push("/login");
+    },
+    getCartCount() {
+      this.axios.get("/carts/products/sum").then((res) => {
+        // todo保存到Vuex中
+        this.$store.dispatch("saveCartCount", res);
+        //
+      });
+    },
+    logout() {
+      this.axios.post("/user/logout").then(() => {
+        this.$message.success("退出成功");
+        this.$cookie.set("userId", "", { expires: "-1" }); //设置为-1是即刻失效
+        this.$store.dispatch("saveUserName", "");
+        this.$store.dispatch("saveCartCount", "0");
+      });
     },
     getProductList() {
       this.axios
@@ -168,11 +188,12 @@ export default {
     },
     goToCart() {
       this.$router.push("/cart");
+      // this.$router.push('/cart');
     },
   },
 };
 </script>
-<style lang='scss' scoped>
+<style lang='scss' >
 @import "./../assets/scss/config.scss";
 @import "./../assets/scss/base.scss";
 @import "./../assets/scss/mixin.scss";
@@ -213,32 +234,6 @@ export default {
       position: relative;
       height: 112px;
       @include flex();
-      .header-logo {
-        width: 55px;
-        height: 55px;
-        display: inline-block;
-        background-color: $colorA;
-        a {
-          display: inline-block;
-          width: 110px;
-          height: 55px;
-          &:before {
-            content: ""; //设置占位
-            @include bgImg(55px, 55px, "/imgs/mi-logo.png");
-            transition: margin 0.2s;
-          }
-          &:after {
-            content: ""; //设置占位
-            @include bgImg(55px, 55px, "/imgs/mi-home.png");
-            transition: margin 0.2s;
-          }
-          &:hover:before {
-            display: inline-block;
-            margin-left: -55px;
-            transition: margin 0.2s;
-          }
-        }
-      }
       .header-menu {
         display: inline-block;
         width: 643px;

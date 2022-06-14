@@ -86,7 +86,7 @@
                 <div class="item-info">
                   <h3>{{i.name}}</h3>
                   <p>{{i.subtitle}}</p>
-                  <p class="price" @click="addCart">{{i.price}}元</p>
+                  <p class="price" @click="addCart(i.id)">{{i.price}}元</p>
                 </div>
               </div>
             </div>
@@ -238,8 +238,14 @@ export default {
       goToCart(){
         this.$router.push('/cart');
       },
-      addCart(){
-        this.showModal=true; 
+      addCart(id){
+        this.axios.post('/carts',{
+          productId:id,
+          selected:true,
+        }).then((res)=>{
+          this.showModal=true,
+          this.$store.dispatch('saveCartCount',res.cartTotalQuantity);
+        })        
       }
   }
 };

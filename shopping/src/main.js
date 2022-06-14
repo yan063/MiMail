@@ -6,6 +6,8 @@ import router from "./router"
 import VueLazyload from "vue-lazyload"
 import VueCookie from 'vue-cookie'
 import store from './store'
+import { Message } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 
 Vue.prototype.axios=axios;
@@ -36,16 +38,22 @@ axios.interceptors.response.use(function (response){
           window.location.href='/#/login'
         }        
       }else{
-        alert(res.msg);
+        Message.warning(res.msg);
         return Promise.reject(res);
       }
-});
+},(error)=>{
+  let res = error.response;
+  Message.error(res.data.message);
+  return Promise.reject(error);
 
+});
+// 路由懒加载，加载时的默认动画
 Vue.use(VueLazyload,{
   loading: '/imgs/loading-svg/loading-bars.svg',
 
 });
 Vue.use(VueCookie);
+Vue.prototype.$message=Message;
 
 
 new Vue({

@@ -1,5 +1,5 @@
 <template>
-<div>order
+<div>
     <order-header></order-header>
     <router-view></router-view>
     <nav-footer></nav-footer>

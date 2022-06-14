@@ -74,11 +74,17 @@ export default {
         })
         .then(
             res=>{
-                this.$cookie.set('userId',res.id,{expires:'1M'});
+                this.$cookie.set('userId',res.id,{expires:'Session'});
                 // 存储在Vuex中
                 // this.$store.dispatch('saveUserName',res.username);
                 this.saveUserName(res.username);
-                this.$router.push('/#/index');
+                // this.$router.push('/#/index');
+                this.$router.push({
+                  name:'index',
+                  params:{
+                    from:'login'
+                  }
+                })
             }
         )       
     },

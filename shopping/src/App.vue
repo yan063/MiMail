@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-       <router-view></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -9,15 +9,14 @@
 // import axios from 'axios'
 
 export default {
-  name: 'App',
-  components: {
+  name: "App",
+  components: {},
+  data() {
+    return {
+      // res:{}
+    };
   },
-  data(){
-return {
-  // res:{}
-}
-  },
-  mounted(){
+  mounted() {
     // storage.setItem('a','111');
     // 本地加载JSON文件形式----需要把main.js里面的基地址删除,在public里面创建mock文件夹
     // axios.get('/mock/user/login.json').then(
@@ -26,49 +25,48 @@ return {
     //   }
     // )
 
-    // esay-mock的方式---需要自己部署 
+    // esay-mock的方式---需要自己部署
     //  这里使用fastmock 需要手动在main.js设置baseURL
     // axios.get('/user/login').then(
     //   (res)=>{
     //     this.res=res;
     //   }
     // )
-    
+
     // 本地集成API的方式需要在src下面创建mock
     // axios.get('/user/login').then(
     //   (res)=>{
     //     this.res=res;
     //   }
     // )
-    
-    this.getUser();
-    this.getCartCount();
-    
-  },
-  methods:{
-    //拉取所有用户信息
-    getUser(){
-      this.axios.get('/user').then((res)=>{
-        // todo保存到Vuex中
-       this.$store.dispatch('saveUserName',res.username);
-        // 
-      })
-    },
-    getCartCount(){
-      this.axios.get('/carts/products/sum').then((res)=>{
-        // todo保存到Vuex中      
-         this.$store.dispatch('saveCartCount',res);
-        // 
-      })
-    }
 
-  }
-}
+    if (this.$cookie.get("userId")) {
+      this.getUser();
+      this.getCartCount();
+    }
+  },
+  methods: {
+    //拉取所有用户信息
+    getUser() {
+      this.axios.get("/user").then((res) => {
+        // todo保存到Vuex中
+        this.$store.dispatch("saveUserName", res.username);
+        //
+      });
+    },
+    getCartCount() {
+      this.axios.get("/carts/products/sum").then((res) => {
+        // todo保存到Vuex中
+        this.$store.dispatch("saveCartCount", res);
+        //
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
 @import "./assets/scss/reset.scss";
-@import './assets/scss/config.scss';
-@import './assets/scss/button.scss';
-
+@import "./assets/scss/config.scss";
+@import "./assets/scss/button.scss";
 </style>
