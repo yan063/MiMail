@@ -64,7 +64,7 @@
             @current-change="handleChange"
           ></el-pagination>
           <!-- 按钮加载 -->
-          <div class="load-more">
+          <div class="load-more" v-if="false">
             <el-button type="primary" :loading="loading" @click="loadMore"
               >加载更多</el-button
             >
@@ -74,7 +74,7 @@
             v-infinite-scroll="scrollMore"
             infinite-scroll-disabled="true"
             infinite-scroll-distance="410"  
-            v-if="true"         
+            v-if="false"         
           >
            
             <img
