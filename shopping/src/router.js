@@ -74,7 +74,7 @@ Vue.use(Router);
             },
             {
                 path:'alipay',
-                name:'order-alipay',
+                name:'alipay',
                 component:OrderAlipay,
             }
         ]         

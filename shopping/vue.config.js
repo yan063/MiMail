@@ -13,5 +13,7 @@ module.exports={
 
         }
     }
+    ,
+    // lintOnSave:false;关闭link校验
 
 }
